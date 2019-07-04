@@ -4,11 +4,11 @@ module.exports = function check(str, bracketsConfig) {
     let flat_config = bracketsConfig.flat();
     for (var i = 0; i < str.length; i++) {
         let current = str.charAt(i);
-        let indices = indexOfAll(flat_config, current);
+        let indices = getAllIndexes(flat_config, current);
 
         if (indices.length == 1){
             let index = indices[0];
-            let remainder = (index+1) % 2
+            let remainder = (index+1) % 2;
             if (remainder == 1)
                 accum.push(current);
             else
@@ -33,6 +33,10 @@ module.exports = function check(str, bracketsConfig) {
 
     return accum.length == 0
 };
-
-const indexOfAll = (arr, val) => arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), []);
-
+function getAllIndexes(arr, val) {
+    var indexes = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indexes.push(i);
+    }
+    return indexes;
+}
